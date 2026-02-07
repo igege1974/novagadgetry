@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tous les Produits - NovaGadgetry</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f8f9fa; color: #333; }
+        
+        header { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); color: white; padding: 1.5rem 2rem; }
+        header h1 { font-size: 1.8rem; margin-bottom: 0.5rem; }
+        header p { opacity: 0.8; }
+        
+        nav { background: #0f3460; padding: 1rem 2rem; display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; align-items: center; }
+        nav a { color: white; text-decoration: none; padding: 0.5rem 1rem; border-radius: 20px; transition: all 0.3s; }
+        nav a:hover, nav a.active { background: #e94560; }
+        
+        /* Cart styles */
+        .cart-container { position: relative; }
+        .cart-btn { background: transparent; border: none; color: white; cursor: pointer; padding: 0.5rem; display: flex; align-items: center; gap: 0.5rem; font-size: 1rem; }
+        .cart-btn:hover { color: #e94560; }
+        .cart-badge { position: absolute; top: -5px; right: -5px; background: #e94560; color: white; font-size: 0.7rem; font-weight: bold; border-radius: 50%; width: 18px; height: 18px; display: none; align-items: center; justify-content: center; }
+        .mini-cart-dropdown { display: none; position: absolute; right: 0; top: 100%; margin-top: 0.5rem; width: 320px; background: white; border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); z-index: 1000; }
+        .mini-cart-dropdown.active { display: block; }
+        .mini-cart-header { padding: 1rem; border-bottom: 1px solid #eee; font-weight: 600; color: #1a1a2e; }
+        
+        .main-container { display: flex; max-width: 1600px; margin: 0 auto; padding: 2rem; gap: 2rem; }
+        
+        .sidebar { width: 250px; flex-shrink: 0; }
+        .sidebar-card { background: white; border-radius: 12px; padding: 1.5rem; box-shadow: 0 2px 10px rgba(0,0,0,0.08); margin-bottom: 1.5rem; }
+        .sidebar-card h3 { font-size: 1rem; margin-bottom: 1rem; color: #1a1a2e; border-bottom: 2px solid #e94560; padding-bottom: 0.5rem; }
+        
+        .category-list { list-style: none; }
+        .category-list li { padding: 0.75rem 0; border-bottom: 1px solid #eee; cursor: pointer; transition: all 0.2s; display: flex; justify-content: space-between; align-items: center; }
+        .category-list li:hover, .category-list li.active { color: #e94560; font-weight: 600; }
+        .category-list li:last-child { border-bottom: none; }
+        .count-badge { background: #f0f0f0; padding: 0.2rem 0.6rem; border-radius: 12px; font-size: 0.75rem; color: #666; }
+        
+        .content { flex: 1; }
+        
+        .toolbar { background: white; padding: 1rem 1.5rem; border-radius: 12px; margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.08); }
+        .product-count { font-weight: 600; color: #1a1a2e; }
+        .sort-select { padding: 0.5rem 1rem; border: 1px solid #ddd; border-radius: 8px; }
+        
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.25rem; }
+        
+        .product-card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.08); transition: all 0.3s; position: relative; }
+        .product-card:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(0,0,0,0.12); }
+        
+        .product-badge { position: absolute; top: 12px; left: 12px; background: #e94560; color: white; padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; z-index: 1; }
+        
+        .product-image { height: 180px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 2.5rem; }
+        
+        .product-info { padding: 1.25rem; }
+        .product-type { font-size: 0.75rem; color: #e94560; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.5rem; }
+        .product-title { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.5rem; color: #1a1a2e; line-height: 1.4; height: 2.6rem; overflow: hidden; }
+        .product-vendor { font-size: 0.8rem; color: #888; margin-bottom: 0.75rem; }
+        .product-price { font-size: 1.2rem; font-weight: 700; color: #1a1a2e; }
+        .product-price span { font-size: 0.85rem; color: #888; font-weight: 400; }
+        
+        .product-actions { padding: 0 1.25rem 1.25rem; display: flex; gap: 0.5rem; }
+        .btn-cart { flex: 1; padding: 0.7rem; background: #1a1a2e; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.85rem; transition: all 0.3s; }
+        .btn-cart:hover { background: #e94560; }
+        .btn-cart:disabled { background: #ccc; cursor: not-allowed; }
+        .btn-view { padding: 0.7rem 1rem; background: #f0f0f0; color: #333; border: none; border-radius: 8px; cursor: pointer; transition: all 0.3s; text-decoration: none; }
+        .btn-view:hover { background: #ddd; }
+        
+        .loading { text-align: center; padding: 4rem; font-size: 1.1rem; color: #666; }
+        .error { background: #fff5f5; color: #c00; padding: 2rem; border-radius: 12px; text-align: center; border: 1px solid #fcc; }
+        .no-products { text-align: center; padding: 3rem; color: #666; background: white; border-radius: 12px; }
+        
+        footer { background: #1a1a2e; color: white; text-align: center; padding: 2rem; margin-top: 2rem; }
+        
+        @media (max-width: 900px) {
+            .main-container { flex-direction: column; }
+            .sidebar { width: 100%; }
+            .category-list { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+            .category-list li { padding: 0.5rem 1rem; border: 1px solid #ddd; border-radius: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🛒 NovaGadgetry</h1>
+        <p>Découvrez notre gamme complète de gadgets tech</p>
+    </header>
+    
+    <nav>
+        <a href="index.html">Accueil</a>
+        <a href="catalogue.html">Catalogue</a>
+        <a href="products.html" class="active">Tous les produits</a>
+        <a href="policies.html">Politiques</a>
+        <!-- Cart Icon -->
+        <div class="cart-container">
+            <button class="cart-btn" id="cart-toggle">
+                🛒 Panier
+                <span class="cart-badge">0</span>
+            </button>
+            <div class="mini-cart-dropdown" id="mini-cart">
+                <div class="mini-cart-header">Mon Panier</div>
+                <div id="mini-cart-content"></div>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="main-container">
+        <aside class="sidebar">
+            <div class="sidebar-card">
+                <h3>Catégories</h3>
+                <ul class="category-list" id="category-list">
+                    <li class="active" data-collection="all">Tous les produits <span class="count-badge" id="count-all">0</span></li>
+                    <li data-collection="audio">Audio <span class="count-badge" id="count-audio">0</span></li>
+                    <li data-collection="smartphone-accessories">Accessoires Smartphone <span class="count-badge" id="count-smartphone-accessories">0</span></li>
+                    <li data-collection="pc-office-accessories">PC & Bureau <span class="count-badge" id="count-pc-office-accessories">0</span></li>
+                    <li data-collection="smart-home">Maison Intelligente <span class="count-badge" id="count-smart-home">0</span></li>
+                    <li data-collection="gaming">Gaming <span class="count-badge" id="count-gaming">0</span></li>
+                    <li data-collection="other-gadgets">Autres Gadgets <span class="count-badge" id="count-other-gadgets">0</span></li>
+                </ul>
+            </div>
+            
+            <div class="sidebar-card">
+                <h3>Tendances</h3>
+                <ul class="category-list" id="trend-list">
+                    <li data-trend="best-seller">🔥 Best-sellers</li>
+                    <li data-trend="trending">📈 Tendance</li>
+                    <li data-trend="new-release">✨ Nouveautés</li>
+                </ul>
+            </div>
+        </aside>
+        
+        <main class="content">
+            <div class="toolbar">
+                <span class="product-count" id="product-count">Chargement...</span>
+                <select class="sort-select" id="sort-select">
+                    <option value="title-asc">Nom A-Z</option>
+                    <option value="title-desc">Nom Z-A</option>
+                    <option value="price-asc">Prix croissant</option>
+                    <option value="price-desc">Prix décroissant</option>
+                </select>
+            </div>
+            
+            <div id="products-container" class="products-grid">
+                <div class="loading">⏳ Chargement des produits depuis Shopify...</div>
+            </div>
+        </main>
+    </div>
+    
+    <footer>
+        <p>© 2026 NovaGadgetry. Tous droits réservés.</p>
+    </footer>
+    
+    <script src="shopify-storefront.js"></script>
+    <script>
+        const SHOPIFY_DOMAIN = 'novagadgetry-3.myshopify.com';
+        const STOREFRONT_TOKEN = '17b5e9148ecf9d56db3abd9b8310cb86';
+        
+        let allProducts = [];
+        let currentFilter = 'all';
+        let currentTrend = null;
+        
+        // Cart toggle
+        document.getElementById('cart-toggle').addEventListener('click', function(e) {
+            e.stopPropagation();
+            const miniCart = document.getElementById('mini-cart');
+            miniCart.classList.toggle('active');
+            renderMiniCart();
+        });
+
+        document.addEventListener('click', function(e) {
+            const miniCart = document.getElementById('mini-cart');
+            const cartToggle = document.getElementById('cart-toggle');
+            if (!miniCart.contains(e.target) && !cartToggle.contains(e.target)) {
+                miniCart.classList.remove('active');
+            }
+        });
+        
+        async function fetchProducts() {
+            const query = `{
+                products(first: 100) {
+                    edges {
+                        node {
+                            id
+                            title
+                            description
+                            handle
+                            vendor
+                            productType
+                            tags
+                            priceRange {
+                                minVariantPrice {
+                                    amount
+                                    currencyCode
+                                }
+                            }
+                            images(first: 1) {
+                                edges {
+                                    node {
+                                        url
+                                    }
+                                }
+                            }
+                            variants(first: 1) {
+                                edges {
+                                    node {
+                                        id
+                                        availableForSale
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }`;
+            
+            try {
+                const response = await fetch(`https://${SHOPIFY_DOMAIN}/api/2024-01/graphql.json`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Shopify-Storefront-Access-Token': STOREFRONT_TOKEN
+                    },
+                    body: JSON.stringify({ query })
+                });
+                
+                const data = await response.json();
+                
+                if (data.errors) {
+                    throw new Error(data.errors[0].message);
+                }
+                
+                allProducts = data.data.products.edges.map(edge => edge.node);
+                updateCounts();
+                renderProducts(allProducts);
+                
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('products-container').innerHTML = 
+                    `<div class="error">❌ Erreur de chargement: ${error.message}<br><br><small>Assurez-vous que les produits ont été importés dans Shopify via le fichier CSV.</small></div>`;
+                document.getElementById('product-count').textContent = '0 produits';
+            }
+        }
+        
+        function updateCounts() {
+            document.getElementById('count-all').textContent = allProducts.length;
+            
+            const collections = ['audio', 'smartphone-accessories', 'pc-office-accessories', 'smart-home', 'gaming', 'other-gadgets'];
+            collections.forEach(col => {
+                const count = allProducts.filter(p => p.tags?.some(t => t.toLowerCase() === col)).length;
+                const el = document.getElementById(`count-${col}`);
+                if (el) el.textContent = count;
+            });
+        }
+        
+        function renderProducts(products) {
+            const container = document.getElementById('products-container');
+            document.getElementById('product-count').textContent = `${products.length} produit${products.length > 1 ? 's' : ''}`;
+            
+            if (products.length === 0) {
+                container.innerHTML = '<div class="no-products">Aucun produit trouvé.</div>';
+                return;
+            }
+            
+            container.innerHTML = products.map(product => {
+                const price = parseFloat(product.priceRange.minVariantPrice.amount).toFixed(2);
+                const imageUrl = product.images.edges[0]?.node?.url;
+                const tags = product.tags || [];
+                const variant = product.variants.edges[0]?.node;
+                const variantId = variant?.id;
+                const available = variant?.availableForSale;
+                const isBestSeller = tags.includes('best-seller');
+                const isTrending = tags.includes('trending');
+                const isNew = tags.includes('new-release');
+                const productPageUrl = `product-${product.handle}.html`;
+                
+                let badge = '';
+                if (isBestSeller) badge = '<div class="product-badge">Best-seller</div>';
+                else if (isTrending) badge = '<div class="product-badge" style="background:#667eea">Tendance</div>';
+                else if (isNew) badge = '<div class="product-badge" style="background:#28a745">Nouveau</div>';
+                
+                return `
+                    <div class="product-card" data-tags="${tags.join(',')}" data-price="${price}" data-title="${product.title}">
+                        ${badge}
+                        <div class="product-image" ${imageUrl ? `style="background-image: url('${imageUrl}'); background-size: contain; background-position: center; background-repeat: no-repeat; background-color: white;"` : ''}>
+                            ${!imageUrl ? '📦' : ''}
+                        </div>
+                        <div class="product-info">
+                            <div class="product-type">${product.productType || 'Gadget'}</div>
+                            <div class="product-title">${product.title}</div>
+                            <div class="product-vendor">${product.vendor || 'NovaGadgetry'}</div>
+                            <div class="product-price">${price} $ <span>CAD</span></div>
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn-cart" 
+                                onclick="addToCartFromProducts('${variantId}', '${product.id}', '${product.title.replace(/'/g, "\\'")}', ${price}, '${imageUrl || ''}', '${product.handle}')"
+                                ${!available ? 'disabled' : ''}>
+                                ${available ? '🛒 Ajouter' : 'Indisponible'}
+                            </button>
+                            <a href="${productPageUrl}" class="btn-view">👁️</a>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        function addToCartFromProducts(variantId, productId, title, price, image, handle) {
+            if (!variantId) {
+                alert('Produit non disponible');
+                return;
+            }
+
+            NovaCart.addItem({
+                variantId,
+                productId,
+                title,
+                price: parseFloat(price),
+                quantity: 1,
+                image,
+                handle
+            });
+
+            const btn = event.target;
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '✓ Ajouté!';
+            btn.style.background = '#28a745';
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+                btn.style.background = '';
+            }, 1500);
+
+            document.getElementById('mini-cart').classList.add('active');
+            renderMiniCart();
+        }
+        
+        function filterByCollection(collection) {
+            currentFilter = collection;
+            currentTrend = null;
+            
+            document.querySelectorAll('#category-list li').forEach(li => {
+                li.classList.toggle('active', li.dataset.collection === collection);
+            });
+            document.querySelectorAll('#trend-list li').forEach(li => li.classList.remove('active'));
+            
+            applyFiltersAndSort();
+        }
+        
+        function filterByTrend(trend) {
+            currentTrend = trend;
+            currentFilter = 'all';
+            
+            document.querySelectorAll('#category-list li').forEach(li => li.classList.remove('active'));
+            document.querySelectorAll('#trend-list li').forEach(li => {
+                li.classList.toggle('active', li.dataset.trend === trend);
+            });
+            
+            applyFiltersAndSort();
+        }
+        
+        function applyFiltersAndSort() {
+            let filtered = [...allProducts];
+            
+            if (currentFilter !== 'all') {
+                filtered = filtered.filter(p => p.tags?.some(t => t.toLowerCase() === currentFilter));
+            }
+            
+            if (currentTrend) {
+                filtered = filtered.filter(p => p.tags?.includes(currentTrend));
+            }
+            
+            const sortValue = document.getElementById('sort-select').value;
+            filtered.sort((a, b) => {
+                if (sortValue === 'title-asc') return a.title.localeCompare(b.title);
+                if (sortValue === 'title-desc') return b.title.localeCompare(a.title);
+                const priceA = parseFloat(a.priceRange.minVariantPrice.amount);
+                const priceB = parseFloat(b.priceRange.minVariantPrice.amount);
+                if (sortValue === 'price-asc') return priceA - priceB;
+                if (sortValue === 'price-desc') return priceB - priceA;
+                return 0;
+            });
+            
+            renderProducts(filtered);
+        }
+        
+        // Event listeners
+        document.querySelectorAll('#category-list li').forEach(li => {
+            li.addEventListener('click', () => filterByCollection(li.dataset.collection));
+        });
+        
+        document.querySelectorAll('#trend-list li').forEach(li => {
+            li.addEventListener('click', () => filterByTrend(li.dataset.trend));
+        });
+        
+        document.getElementById('sort-select').addEventListener('change', applyFiltersAndSort);
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            fetchProducts();
+            NovaCart.init();
+        });
+    </script>
+</body>
+</html>
