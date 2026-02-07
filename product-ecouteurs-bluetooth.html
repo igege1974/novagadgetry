@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Écouteurs Bluetooth - NovaGadgetry</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://www.paypal.com/sdk/js?client-id=AWZGrfFz9C5WpJPL7UXTPt-0GarcFddR7Icp5tTdQAvsnmn1KLxsdqEbpKjAuTVARn_a7iYKs1MUlf7i&currency=CAD"></script>
+  <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body class="bg-gray-50 font-sans">
+  <nav class="bg-white shadow-sm p-4">
+    <div class="max-w-6xl mx-auto flex justify-between items-center">
+      <a href="index.html" class="text-2xl font-bold text-blue-600">NovaGadgetry</a>
+      <a href="catalogue.html" class="text-gray-600">Retour au catalogue</a>
+    </div>
+  </nav>
+
+  <main class="max-w-6xl mx-auto p-6 mt-8">
+    <div class="flex flex-col md:flex-row gap-12">
+      <!-- Galerie -->
+      <div class="md:w-1/2">
+        <div class="relative">
+          <div class="bg-white rounded-2xl shadow-lg p-3">
+            <img id="mainImage" src="https://media.istockphoto.com/id/1370718733/photo/grey-headphones-wireless-earphones-with-case-isolated-white-background.jpg?s=612x612&w=0&k=20&c=goSDblKNhWbboNVq9_whv6HqSneYv-4mbv-yPlrEcBg=" alt="Écouteurs Bluetooth" class="w-full h-96 rounded-xl object-contain bg-white" />
+          </div>
+
+          <div class="flex flex-wrap mt-4 gap-3 justify-center">
+            <img src="https://media.istockphoto.com/id/1370718733/photo/grey-headphones-wireless-earphones-with-case-isolated-white-background.jpg?s=612x612&w=0&k=20&c=goSDblKNhWbboNVq9_whv6HqSneYv-4mbv-yPlrEcBg=" alt="Écouteurs Bluetooth - vue 1" class="w-20 h-20 rounded-lg cursor-pointer border-2 border-blue-600 object-contain bg-white" onclick="document.getElementById('mainImage').src=this.src" />
+            <img src="https://media.istockphoto.com/id/1204039347/photo/apple-airpods-on-a-white-background.jpg?s=612x612&w=0&k=20&c=2__4hfynkvBt7PA0UE7N5JxSTuaGRFVKaXJUuoQlBzk=" alt="Écouteurs Bluetooth - vue 2" class="w-20 h-20 rounded-lg cursor-pointer border-2 border-transparent hover:border-blue-600 object-contain bg-white" onclick="document.getElementById('mainImage').src=this.src" />
+            <img src="https://media.istockphoto.com/id/1208634643/photo/apple-airpods-pro-on-a-white-background.jpg?s=612x612&w=0&k=20&c=TRA9JwDgw_6mv7PV8CRkYfw5oAJ4SVVC14ximky_dr0=" alt="Écouteurs Bluetooth - vue 3" class="w-20 h-20 rounded-lg cursor-pointer border-2 border-transparent hover:border-blue-600 object-contain bg-white" onclick="document.getElementById('mainImage').src=this.src" />
+          </div>
+
+          <p class="text-xs text-gray-500 mt-3 text-center">Astuce : cliquez sur une miniature pour changer la photo.</p>
+        </div>
+      </div>
+
+      <!-- Détails produit + paiements -->
+      <div class="md:w-1/2">
+        <h1 class="text-4xl font-extrabold text-gray-900 mb-4">Écouteurs Bluetooth</h1>
+        <p class="text-gray-600 mb-6">Son immersif, confort longue durée et autonomie exceptionnelle. Parfait pour musique, appels et gaming.</p>
+
+        <div class="flex items-end gap-3 mb-6">
+          <div class="text-3xl font-bold text-blue-600">123.68$ CAD</div>
+          <div class="text-sm text-gray-500">Livraison suivie</div>
+        </div>
+
+        <ul class="space-y-2 text-gray-700 mb-8">
+          <li>• Bluetooth 5.0 pour connexion stable</li>
+          <li>• Autonomie jusqu'à 20h d'écoute</li>
+          <li>• Coussinets confortables, ajustables</li>
+          <li>• Microphone intégré pour appels clairs</li>
+          <li>• Compatible smartphone, tablette, ordinateur</li>
+        </ul>
+
+        <div class="bg-white rounded-2xl shadow p-5 mb-6">
+          <h2 class="text-lg font-semibold text-gray-900 mb-3">Payer avec PayPal / Carte</h2>
+          <div id="paypal-button-container"></div>
+          <p class="text-xs text-gray-500 mt-3">PayPal accepte aussi les cartes (Visa, Mastercard, Amex) selon pays.</p>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow p-5">
+          <h2 class="text-lg font-semibold text-gray-900 mb-3">Payer par carte (Stripe)</h2>
+          <div id="card-element" class="p-4 border rounded-lg bg-white mb-4"></div>
+          <button id="stripe-button" class="w-full bg-black text-white py-4 rounded-xl font-bold">Payer 123.68$ avec Stripe</button>
+          <p class="text-xs text-gray-500 mt-3">Note : sur un site 100% statique, Stripe nécessite un backend pour finaliser un paiement.</p>
+        </div>
+
+        <div class="mt-6 grid grid-cols-3 gap-3 text-center text-xs text-gray-600">
+          <div class="bg-gray-100 rounded-lg py-2">Paiement sécurisé</div>
+          <div class="bg-gray-100 rounded-lg py-2">Support 7j/7</div>
+          <div class="bg-gray-100 rounded-lg py-2">Satisfait ou remboursé</div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // PayPal
+    paypal.Buttons({
+      createOrder: function(data, actions) {
+        return actions.order.create({
+          purchase_units: [{ 
+            amount: { value: '123.68' },
+            description: 'Écouteurs Bluetooth - NovaGadgetry'
+          }]
+        });
+      },
+      onApprove: function(data, actions) {
+        return actions.order.capture().then(function(details) {
+          alert('Paiement réussi ! Merci ' + details.payer.name.given_name + '. Vous recevrez un email de confirmation.');
+        });
+      },
+      onError: function(err) {
+        alert('Une erreur est survenue lors du paiement. Veuillez réessayer.');
+        console.error(err);
+      }
+    }).render('#paypal-button-container');
+
+    // Stripe (UI uniquement - backend nécessaire pour confirmer un paiement)
+    const stripe = Stripe('pk_live_51SwpyUBIzzzQv9G1fiKGFD0KKUeLRXh9bgmj0PxfqSRcpQk0ElFfjBZBlOzskYyy2a00guCUCF4J');
+    const elements = stripe.elements();
+    const card = elements.create('card', { hidePostalCode: true });
+    card.mount('#card-element');
+
+    document.getElementById('stripe-button').addEventListener('click', async function() {
+      const btn = this;
+      btn.disabled = true;
+      btn.textContent = 'Traitement...';
+
+      try {
+        const result = await stripe.createPaymentMethod({ type: 'card', card: card });
+        if (result.error) {
+          alert(result.error.message);
+        } else {
+          alert('Carte capturée (PaymentMethod créé): ' + result.paymentMethod.id + "\n\nPour encaisser réellement, il faut un backend Stripe (PaymentIntent)." );
+        }
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Payer 123.68$ avec Stripe';
+      }
+    });
+  </script>
+</body>
+</html>
