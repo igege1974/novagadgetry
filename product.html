@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Dynamic SEO Meta Tags (will be updated by JS) -->
+    <title>Product Details | NovaGadgetry</title>
+    <meta name="description" id="meta-description" content="Discover this product at NovaGadgetry. Premium tech gadgets with fast shipping to USA & Canada." />
+    <meta name="keywords" content="tech gadgets, phone accessories, electronics, NovaGadgetry" />
+    <meta name="author" content="NovaGadgetry" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" id="canonical-url" href="https://novagadgetry.com/product.html" />
+    
+    <!-- Hreflang for USA/Canada -->
+    <link rel="alternate" hreflang="en-US" id="hreflang-us" href="https://novagadgetry.com/product.html" />
+    <link rel="alternate" hreflang="en-CA" id="hreflang-ca" href="https://novagadgetry.com/product.html" />
+    <link rel="alternate" hreflang="x-default" id="hreflang-default" href="https://novagadgetry.com/product.html" />
+    
+    <!-- Open Graph / Facebook (will be updated by JS) -->
+    <meta property="og:type" content="product" />
+    <meta property="og:url" id="og-url" content="https://novagadgetry.com/product.html" />
+    <meta property="og:title" id="og-title" content="Product | NovaGadgetry" />
+    <meta property="og:description" id="og-description" content="Discover this product at NovaGadgetry." />
+    <meta property="og:image" id="og-image" content="" />
+    <meta property="og:site_name" content="NovaGadgetry" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="product:price:amount" id="og-price" content="" />
+    <meta property="product:price:currency" content="CAD" />
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" id="twitter-title" content="Product | NovaGadgetry" />
+    <meta name="twitter:description" id="twitter-description" content="Discover this product at NovaGadgetry." />
+    <meta name="twitter:image" id="twitter-image" content="" />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    
+    <!-- Preconnect -->
+    <link rel="preconnect" href="https://novagadgetry-3.myshopify.com" />
+    
+    <!-- Schema.org Product (will be updated by JS) -->
+    <script type="application/ld+json" id="schema-product">
+    {
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "name": "Product",
+      "description": "",
+      "url": "https://novagadgetry.com/product.html",
+      "brand": {
+        "@type": "Brand",
+        "name": "NovaGadgetry"
+      }
+    }
+    </script>
+    
+    <!-- Breadcrumb Schema -->
+    <script type="application/ld+json" id="schema-breadcrumb">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://novagadgetry.com/"},
+        {"@type": "ListItem", "position": 2, "name": "Catalogue", "item": "https://novagadgetry.com/catalogue.html"},
+        {"@type": "ListItem", "position": 3, "name": "Product", "item": "https://novagadgetry.com/product.html"}
+      ]
+    }
+    </script>
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f5f7fa; color: #333; }
+        
+        header { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); color: white; padding: 1.5rem 2rem; }
+        header .header-content { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        header h1 { font-size: 1.8rem; }
+        header a { color: white; text-decoration: none; }
+        
+        nav { background: #0f3460; padding: 1rem 2rem; display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; align-items: center; }
+        nav a { color: white; text-decoration: none; padding: 0.5rem 1rem; border-radius: 20px; transition: all 0.3s; }
+        nav a:hover, nav a.active { background: #e94560; }
+        
+        .cart-container { position: relative; }
+        .cart-btn { background: transparent; border: none; color: white; cursor: pointer; padding: 0.5rem; display: flex; align-items: center; gap: 0.5rem; font-size: 1rem; }
+        .cart-btn:hover { color: #e94560; }
+        .cart-badge { position: absolute; top: -5px; right: -5px; background: #e94560; color: white; font-size: 0.7rem; font-weight: bold; border-radius: 50%; width: 18px; height: 18px; display: none; align-items: center; justify-content: center; }
+        .mini-cart-dropdown { display: none; position: absolute; right: 0; top: 100%; margin-top: 0.5rem; width: 320px; background: white; border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); z-index: 1000; }
+        .mini-cart-dropdown.active { display: block; }
+        .mini-cart-header { padding: 1rem; border-bottom: 1px solid #eee; font-weight: 600; color: #1a1a2e; }
+        
+        .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+        
+        .breadcrumb { margin-bottom: 1.5rem; font-size: 0.9rem; color: #666; }
+        .breadcrumb a { color: #e94560; text-decoration: none; }
+        .breadcrumb a:hover { text-decoration: underline; }
+        .breadcrumb span { margin: 0 0.5rem; }
+        
+        .product-page { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; background: white; border-radius: 16px; padding: 2rem; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+        
+        /* Image Gallery */
+        .product-gallery { display: flex; flex-direction: column; gap: 1rem; position: sticky; top: 100px; }
+        .main-image-container { position: relative; background: #fafafa; border-radius: 12px; overflow: hidden; width: 100%; height: 400px; display: flex; align-items: center; justify-content: center; }
+        .main-image { max-width: 100%; max-height: 100%; object-fit: contain; cursor: zoom-in; transition: transform 0.3s; }
+        .main-image:hover { transform: scale(1.02); }
+        .placeholder-image { width: 100%; height: 100%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 5rem; }
+        
+        .thumbnails { display: flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center; }
+        .thumbnail { width: 70px; height: 70px; border-radius: 8px; cursor: pointer; border: 2px solid transparent; transition: all 0.3s; object-fit: contain; background: #fafafa; }
+        .thumbnail:hover { border-color: #e94560; }
+        .thumbnail.active { border-color: #e94560; box-shadow: 0 0 0 2px rgba(233, 69, 96, 0.2); }
+        
+        /* Product Details */
+        .product-details { display: flex; flex-direction: column; gap: 1.5rem; }
+        
+        .product-title { font-size: 2rem; font-weight: 700; color: #1a1a2e; line-height: 1.3; }
+        
+        .product-price-section { display: flex; align-items: baseline; gap: 1rem; }
+        .product-price { font-size: 2.25rem; font-weight: 700; color: #e94560; }
+        .product-currency { font-size: 1.25rem; color: #666; }
+        .compare-price { font-size: 1.25rem; color: #999; text-decoration: line-through; }
+        
+        .product-availability { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.9rem; font-weight: 600; }
+        .product-availability.in-stock { background: #d4edda; color: #155724; }
+        .product-availability.out-of-stock { background: #f8d7da; color: #721c24; }
+        
+        .product-description { color: #555; line-height: 1.8; font-size: 1rem; max-height: 300px; overflow-y: auto; padding-right: 0.5rem; }
+        .product-description::-webkit-scrollbar { width: 6px; }
+        .product-description::-webkit-scrollbar-thumb { background: #ccc; border-radius: 3px; }
+        .product-description h1, .product-description h2, .product-description h3 { margin: 1rem 0 0.5rem; color: #1a1a2e; font-size: 1.1rem; }
+        .product-description ul, .product-description ol { margin-left: 1.5rem; margin-bottom: 1rem; }
+        .product-description p { margin-bottom: 1rem; }
+        .product-description img { max-width: 100%; max-height: 200px; object-fit: contain; margin: 0.5rem 0; }
+        
+        /* Quantity Selector */
+        .quantity-section { display: flex; flex-direction: column; gap: 0.75rem; }
+        .quantity-label { font-weight: 600; color: #1a1a2e; }
+        .quantity-selector { display: flex; align-items: center; gap: 0; width: fit-content; border: 2px solid #e0e0e0; border-radius: 8px; overflow: hidden; }
+        .qty-btn { width: 44px; height: 44px; border: none; background: #f5f5f5; font-size: 1.25rem; cursor: pointer; transition: background 0.2s; display: flex; align-items: center; justify-content: center; }
+        .qty-btn:hover { background: #e94560; color: white; }
+        .qty-input { width: 60px; height: 44px; border: none; text-align: center; font-size: 1.1rem; font-weight: 600; -moz-appearance: textfield; }
+        .qty-input::-webkit-outer-spin-button, .qty-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+        
+        /* Action Buttons */
+        .action-buttons { display: flex; flex-direction: column; gap: 1rem; }
+        .btn-add-cart { width: 100%; padding: 1rem 2rem; font-size: 1.1rem; font-weight: 700; border: none; border-radius: 10px; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; justify-content: center; gap: 0.75rem; background: #1a1a2e; color: white; }
+        .btn-add-cart:hover { background: #e94560; transform: translateY(-2px); }
+        .btn-add-cart:disabled { background: #ccc; cursor: not-allowed; transform: none; }
+        
+        .btn-buy-now { width: 100%; padding: 1rem 2rem; font-size: 1.1rem; font-weight: 700; border: 2px solid #e94560; border-radius: 10px; cursor: pointer; transition: all 0.3s; background: white; color: #e94560; display: flex; align-items: center; justify-content: center; gap: 0.75rem; }
+        .btn-buy-now:hover { background: #e94560; color: white; transform: translateY(-2px); }
+        .btn-buy-now:disabled { border-color: #ccc; color: #ccc; cursor: not-allowed; transform: none; }
+        
+        .back-link { display: inline-flex; align-items: center; gap: 0.5rem; color: #e94560; text-decoration: none; font-weight: 600; margin-top: 1rem; }
+        .back-link:hover { text-decoration: underline; }
+        
+        /* Product Tags */
+        .product-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+        .product-tag { padding: 0.4rem 0.8rem; background: #f0f0f0; border-radius: 15px; font-size: 0.8rem; color: #666; }
+        .product-tag.best-seller { background: #fff3cd; color: #856404; }
+        .product-tag.trending { background: #d4edda; color: #155724; }
+        .product-tag.new { background: #cce5ff; color: #004085; }
+        
+        /* Loading & Error States */
+        .loading-container { text-align: center; padding: 5rem 2rem; background: white; border-radius: 16px; }
+        .loading-spinner { width: 50px; height: 50px; border: 4px solid #f0f0f0; border-top-color: #e94560; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 1.5rem; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        
+        .error-container { text-align: center; padding: 4rem 2rem; background: white; border-radius: 16px; }
+        .error-icon { font-size: 4rem; margin-bottom: 1rem; }
+        .error-message { color: #721c24; font-size: 1.2rem; margin-bottom: 1rem; }
+        
+        footer { background: #1a1a2e; color: white; text-align: center; padding: 2rem; margin-top: 3rem; }
+        
+        /* Responsive */
+        @media (max-width: 900px) {
+            .product-page { grid-template-columns: 1fr; gap: 2rem; }
+            .main-image-container { max-height: 400px; }
+            .product-title { font-size: 1.5rem; }
+            .product-price { font-size: 1.75rem; }
+        }
+        
+        @media (max-width: 600px) {
+            .container { padding: 1rem; }
+            .product-page { padding: 1.5rem; }
+            .thumbnails { justify-content: center; }
+            .thumbnail { width: 60px; height: 60px; }
+            nav { gap: 0.75rem; padding: 1rem; }
+            nav a { padding: 0.4rem 0.8rem; font-size: 0.9rem; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <a href="index.html"><h1>🛒 NovaGadgetry</h1></a>
+        </div>
+    </header>
+    
+    <nav aria-label="Main navigation">
+        <a href="index.html">Home</a>
+        <a href="catalogue.html">Catalogue</a>
+        <a href="products.html">All Products</a>
+        <a href="policies.html">Policies</a>
+        <div class="cart-container">
+            <button class="cart-btn" id="cart-toggle" aria-label="Shopping cart">
+                🛒 Cart
+                <span class="cart-badge">0</span>
+            </button>
+            <div class="mini-cart-dropdown" id="mini-cart">
+                <div class="mini-cart-header">My Cart</div>
+                <div id="mini-cart-content"></div>
+            </div>
+        </div>
+    </nav>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="index.html">Home</a>
+            <span>›</span>
+            <a href="catalogue.html">Catalogue</a>
+            <span>›</span>
+            <span id="breadcrumb-product">Product</span>
+        </nav>
+        
+        <div id="product-container">
+            <div class="loading-container">
+                <div class="loading-spinner"></div>
+                <p>Loading product details...</p>
+            </div>
+        </div>
+    </main>
+    
+    <footer>
+        <p>© 2026 NovaGadgetry. All rights reserved. | Shipping to USA & Canada</p>
+    </footer>
+    
+    <script src="shopify-storefront.js"></script>
+    <script>
+        const SHOPIFY_DOMAIN = 'novagadgetry-3.myshopify.com';
+        const STOREFRONT_TOKEN = '17b5e9148ecf9d56db3abd9b8310cb86';
+        const PLACEHOLDER_IMAGE = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400"%3E%3Crect fill="%23667eea" width="400" height="400"/%3E%3Ctext fill="%23fff" font-family="Arial" font-size="48" x="50%25" y="50%25" text-anchor="middle" dy=".3em"%3E📦%3C/text%3E%3C/svg%3E';
+        
+        let currentProduct = null;
+        let selectedVariant = null;
+        let quantity = 1;
+        
+        // Cart toggle
+        document.getElementById('cart-toggle').addEventListener('click', function(e) {
+            e.stopPropagation();
+            const miniCart = document.getElementById('mini-cart');
+            miniCart.classList.toggle('active');
+            renderMiniCart();
+        });
+
+        document.addEventListener('click', function(e) {
+            const miniCart = document.getElementById('mini-cart');
+            const cartToggle = document.getElementById('cart-toggle');
+            if (!miniCart.contains(e.target) && !cartToggle.contains(e.target)) {
+                miniCart.classList.remove('active');
+            }
+        });
+        
+        // Get product handle from URL
+        function getProductHandle() {
+            const params = new URLSearchParams(window.location.search);
+            return params.get('handle');
+        }
+        
+        // Fetch product by handle
+        async function fetchProduct(handle) {
+            const query = `{
+                product(handle: "${handle}") {
+                    id
+                    title
+                    description
+                    descriptionHtml
+                    handle
+                    vendor
+                    productType
+                    tags
+                    images(first: 10) {
+                        edges {
+                            node {
+                                url
+                                altText
+                            }
+                        }
+                    }
+                    variants(first: 10) {
+                        edges {
+                            node {
+                                id
+                                title
+                                price {
+                                    amount
+                                    currencyCode
+                                }
+                                compareAtPrice {
+                                    amount
+                                    currencyCode
+                                }
+                                availableForSale
+                            }
+                        }
+                    }
+                }
+            }`;
+            
+            const response = await fetch(`https://${SHOPIFY_DOMAIN}/api/2024-01/graphql.json`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Shopify-Storefront-Access-Token': STOREFRONT_TOKEN
+                },
+                body: JSON.stringify({ query })
+            });
+            
+            const data = await response.json();
+            
+            if (data.errors) {
+                throw new Error(data.errors[0].message);
+            }
+            
+            return data.data.product;
+        }
+        
+        // Update SEO meta tags
+        function updateSEO(product) {
+            const url = `https://novagadgetry.com/product.html?handle=${product.handle}`;
+            const imageUrl = product.images.edges[0]?.node?.url || '';
+            const description = product.description ? product.description.substring(0, 160) : `Shop ${product.title} at NovaGadgetry. Fast shipping to USA & Canada.`;
+            const price = selectedVariant?.price?.amount || '0';
+            
+            document.title = `${product.title} | NovaGadgetry`;
+            document.getElementById('meta-description').content = description;
+            document.getElementById('canonical-url').href = url;
+            document.getElementById('hreflang-us').href = url;
+            document.getElementById('hreflang-ca').href = url;
+            document.getElementById('hreflang-default').href = url;
+            document.getElementById('og-url').content = url;
+            document.getElementById('og-title').content = product.title + ' | NovaGadgetry';
+            document.getElementById('og-description').content = description;
+            document.getElementById('og-image').content = imageUrl;
+            document.getElementById('og-price').content = price;
+            document.getElementById('twitter-title').content = product.title + ' | NovaGadgetry';
+            document.getElementById('twitter-description').content = description;
+            document.getElementById('twitter-image').content = imageUrl;
+            
+            // Update Schema.org Product
+            const schemaProduct = {
+                "@context": "https://schema.org",
+                "@type": "Product",
+                "name": product.title,
+                "description": product.description || '',
+                "url": url,
+                "image": product.images.edges.map(e => e.node.url),
+                "brand": {
+                    "@type": "Brand",
+                    "name": product.vendor || "NovaGadgetry"
+                },
+                "offers": {
+                    "@type": "Offer",
+                    "price": price,
+                    "priceCurrency": "CAD",
+                    "availability": selectedVariant?.availableForSale ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
+                    "seller": {
+                        "@type": "Organization",
+                        "name": "NovaGadgetry"
+                    }
+                }
+            };
+            document.getElementById('schema-product').textContent = JSON.stringify(schemaProduct);
+            
+            // Update Breadcrumb Schema
+            const schemaBreadcrumb = {
+                "@context": "https://schema.org",
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                    {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://novagadgetry.com/"},
+                    {"@type": "ListItem", "position": 2, "name": "Catalogue", "item": "https://novagadgetry.com/catalogue.html"},
+                    {"@type": "ListItem", "position": 3, "name": product.title, "item": url}
+                ]
+            };
+            document.getElementById('schema-breadcrumb').textContent = JSON.stringify(schemaBreadcrumb);
+        }
+        
+        // Render product page
+        function renderProduct(product) {
+            currentProduct = product;
+            selectedVariant = product.variants.edges[0]?.node;
+            
+            const images = product.images.edges.map(e => e.node);
+            const mainImage = images[0]?.url || PLACEHOLDER_IMAGE;
+            const price = parseFloat(selectedVariant?.price?.amount || 0).toFixed(2);
+            const comparePrice = selectedVariant?.compareAtPrice?.amount ? parseFloat(selectedVariant.compareAtPrice.amount).toFixed(2) : null;
+            const available = selectedVariant?.availableForSale;
+            const tags = product.tags || [];
+            
+            // Update breadcrumb
+            document.getElementById('breadcrumb-product').textContent = product.title;
+            
+            // Update SEO
+            updateSEO(product);
+            
+            // Build thumbnails HTML
+            let thumbnailsHTML = '';
+            if (images.length > 1) {
+                thumbnailsHTML = `
+                    <div class="thumbnails">
+                        ${images.map((img, index) => `
+                            <img 
+                                src="${img.url}" 
+                                alt="${img.altText || product.title + ' - Image ' + (index + 1)}" 
+                                class="thumbnail ${index === 0 ? 'active' : ''}" 
+                                onclick="changeMainImage('${img.url}', this)"
+                                onerror="this.src='${PLACEHOLDER_IMAGE}'"
+                            >
+                        `).join('')}
+                    </div>
+                `;
+            }
+            
+            // Build tags HTML
+            let tagsHTML = '';
+            if (tags.length > 0) {
+                tagsHTML = `
+                    <div class="product-tags">
+                        ${tags.map(tag => {
+                            let tagClass = 'product-tag';
+                            if (tag === 'best-seller') tagClass += ' best-seller';
+                            else if (tag === 'trending') tagClass += ' trending';
+                            else if (tag === 'new-release') tagClass += ' new';
+                            return `<span class="${tagClass}">${tag}</span>`;
+                        }).join('')}
+                    </div>
+                `;
+            }
+            
+            document.getElementById('product-container').innerHTML = `
+                <div class="product-page" itemscope itemtype="https://schema.org/Product">
+                    <div class="product-gallery">
+                        <div class="main-image-container">
+                            ${mainImage !== PLACEHOLDER_IMAGE 
+                                ? `<img id="main-image" src="${mainImage}" alt="${images[0]?.altText || product.title}" class="main-image" itemprop="image" onerror="this.outerHTML='<div class=\\'placeholder-image\\'>📦</div>'">`
+                                : `<div class="placeholder-image">📦</div>`
+                            }
+                        </div>
+                        ${thumbnailsHTML}
+                    </div>
+                    
+                    <div class="product-details">
+                        <h1 class="product-title" itemprop="name">${product.title}</h1>
+                        
+                        ${tagsHTML}
+                        
+                        <div class="product-price-section" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+                            <span class="product-price"><span itemprop="price">${price}</span></span>
+                            <span class="product-currency"><span itemprop="priceCurrency">CAD</span></span>
+                            ${comparePrice && parseFloat(comparePrice) > parseFloat(price) ? `<span class="compare-price">${comparePrice}$</span>` : ''}
+                            <link itemprop="availability" href="https://schema.org/${available ? 'InStock' : 'OutOfStock'}" />
+                        </div>
+                        
+                        <div class="product-availability ${available ? 'in-stock' : 'out-of-stock'}">
+                            ${available ? '✓ In Stock' : '✗ Out of Stock'}
+                        </div>
+                        
+                        <div class="product-description" itemprop="description">
+                            ${product.descriptionHtml || product.description || '<p>No description available for this product.</p>'}
+                        </div>
+                        
+                        <div class="quantity-section">
+                            <label class="quantity-label">Quantity</label>
+                            <div class="quantity-selector">
+                                <button class="qty-btn" onclick="updateQuantity(-1)" aria-label="Decrease quantity">−</button>
+                                <input type="number" id="qty-input" class="qty-input" value="1" min="1" max="10" onchange="setQuantity(this.value)" aria-label="Quantity">
+                                <button class="qty-btn" onclick="updateQuantity(1)" aria-label="Increase quantity">+</button>
+                            </div>
+                        </div>
+                        
+                        <div class="action-buttons">
+                            <button 
+                                class="btn-add-cart" 
+                                id="btn-add-cart"
+                                onclick="addToCart()"
+                                ${!available ? 'disabled' : ''}
+                                aria-label="Add to cart"
+                            >
+                                🛒 ${available ? 'Add to Cart' : 'Unavailable'}
+                            </button>
+                            
+                            <button 
+                                class="btn-buy-now" 
+                                id="btn-buy-now"
+                                onclick="buyNow()"
+                                ${!available ? 'disabled' : ''}
+                                aria-label="Buy now"
+                            >
+                                ⚡ Buy Now
+                            </button>
+                        </div>
+                        
+                        <a href="catalogue.html" class="back-link">← Back to Catalogue</a>
+                    </div>
+                </div>
+            `;
+        }
+        
+        // Change main image
+        function changeMainImage(url, thumbnail) {
+            const mainImage = document.getElementById('main-image');
+            if (mainImage) {
+                mainImage.src = url;
+            }
+            
+            document.querySelectorAll('.thumbnail').forEach(t => t.classList.remove('active'));
+            if (thumbnail) {
+                thumbnail.classList.add('active');
+            }
+        }
+        
+        // Update quantity
+        function updateQuantity(delta) {
+            const input = document.getElementById('qty-input');
+            let newValue = parseInt(input.value) + delta;
+            newValue = Math.max(1, Math.min(10, newValue));
+            input.value = newValue;
+            quantity = newValue;
+        }
+        
+        function setQuantity(value) {
+            let newValue = parseInt(value);
+            if (isNaN(newValue) || newValue < 1) newValue = 1;
+            if (newValue > 10) newValue = 10;
+            document.getElementById('qty-input').value = newValue;
+            quantity = newValue;
+        }
+        
+        // Add to cart
+        function addToCart() {
+            if (!selectedVariant || !selectedVariant.availableForSale) {
+                alert('This product is unavailable');
+                return;
+            }
+            
+            const imageUrl = currentProduct.images.edges[0]?.node?.url || PLACEHOLDER_IMAGE;
+            
+            NovaCart.addItem({
+                variantId: selectedVariant.id,
+                productId: currentProduct.id,
+                title: currentProduct.title,
+                price: parseFloat(selectedVariant.price.amount),
+                quantity: quantity,
+                image: imageUrl,
+                handle: currentProduct.handle
+            });
+            
+            const btn = document.getElementById('btn-add-cart');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '✓ Added to Cart!';
+            btn.style.background = '#28a745';
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+                btn.style.background = '';
+            }, 2000);
+            
+            document.getElementById('mini-cart').classList.add('active');
+            renderMiniCart();
+        }
+        
+        // Buy now (direct checkout)
+        async function buyNow() {
+            if (!selectedVariant || !selectedVariant.availableForSale) {
+                alert('This product is unavailable');
+                return;
+            }
+            
+            const btn = document.getElementById('btn-buy-now');
+            btn.innerHTML = '⏳ Redirecting...';
+            btn.disabled = true;
+            
+            try {
+                const cart = await ShopifyStorefront.createCart(selectedVariant.id, quantity);
+                if (cart && cart.checkoutUrl) {
+                    window.location.href = cart.checkoutUrl;
+                }
+            } catch (error) {
+                console.error('Checkout error:', error);
+                alert('Error creating checkout. Please try again.');
+                btn.innerHTML = '⚡ Buy Now';
+                btn.disabled = false;
+            }
+        }
+        
+        // Show error
+        function showError(message) {
+            document.getElementById('product-container').innerHTML = `
+                <div class="error-container">
+                    <div class="error-icon">😕</div>
+                    <p class="error-message">${message}</p>
+                    <a href="catalogue.html" class="back-link">← Browse our catalogue</a>
+                </div>
+            `;
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', async function() {
+            NovaCart.init();
+            
+            const handle = getProductHandle();
+            
+            if (!handle) {
+                showError('No product specified. Please select a product from our catalogue.');
+                return;
+            }
+            
+            try {
+                const product = await fetchProduct(handle);
+                
+                if (!product) {
+                    showError('Product not found. It may have been removed or the link is incorrect.');
+                    return;
+                }
+                
+                renderProduct(product);
+            } catch (error) {
+                console.error('Error loading product:', error);
+                showError('Unable to load product details. Please try again later.');
+            }
+        });
+    </script>
+</body>
+</html>
